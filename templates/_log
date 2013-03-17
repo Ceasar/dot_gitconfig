@@ -1,0 +1,5 @@
+[log]
+    # Make all dates in the log relative
+    date = relative
+
+    decorate

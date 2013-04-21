@@ -1,38 +1,37 @@
 [alias]
     # Use template "!sh -c 'git command $0'" for positional arguments
 
-    # Verbose add
-    join = add -v
 
-    # Verbose add
-    append = add -v
+    # Staging
+    # =======
 
-    # Show remotes
-    remotes = remote -v
+    # Add file contents to the index verbosely
+    stage = add -v
 
-    # Unmodify/Discard a change
-    unmodify = checkout HEAD --
-
-    # Unmodify/Discard a change
-    discard = checkout HEAD --
-
-    # Undo add (move changes from index to working directory)
+    # Remove file contents from the index
     unstage = reset HEAD
+
+    # Update file in working tree to match version in the index
+    restore = checkout HEAD --
+
+    # Update files in the working tree to match the version in the specified tree
+    resume = checkout
+
+
+    # Commits
+    # =======
 
     # Undo the previous commit, and leave the changes in the index
     # To undo _this_, check the reflog then git reset --hard the commit
     # See: http://stackoverflow.com/questions/5473/undoing-a-git-reset-hard-head1
     uncommit = reset --soft HEAD^
 
-    # Abort a merge
-    abort = merge --abort
-
-
-    # Undo the latest commit, and leave the changes in the working directory
-    # uncommit = reset HEAD^
-
     # Amend the last commit
-    amend = commit --amend
+    recommit = commit --amend
+
+
+    # History
+    # =======
 
     # Squash multiple commits into one
     # Must provide argument in the form HEAD~$1 where $1 is the
@@ -44,6 +43,9 @@
     # Squashing changes history and will cause trouble when merging.
     squash = rebase -i
 
+    # Remotes
+    # =======
+
     # Sync with master
     # Rebase the current branch on top of upstream after fetching.
     # Show diff stat at the end.
@@ -54,9 +56,34 @@
     # Show diff stat at the end.
     syncup = !sh -c 'git sync && git push origin master'
 
+    # Show remotes
+    remotes = remote -v
+
+    # Delete a remote
+    rmremote = remote rm
+
+    # Delete a remote branch
+    rmremotebranch = !sh -c 'git push origin :$0'
+
+
+    # Merges
+    # ------
+
+    # Abort a merge
+    abort = merge --abort
+
+    # Show all merged branches
+    merged = branch --merged
+
+    # Show all unmerged branches
+    unmerged = branch --no-merged
+
 
     # Stashes
     # =======
+
+    # Show all stashes
+    stashes = stash list
 
     # unstash [-q|--quiet] [<stash>]
     # `apply` a stash and then `drop` it immediately from the stack.
@@ -66,15 +93,9 @@
     # must be a reference of the form stash@{<revision>}.
     unstash = stash pop --index
 
-    # Show all stashes
-    stashes = stash list
-
 
     # History
     # =======
-
-    # Show the last commit
-    last = log -1 HEAD --stat --abbrev-commit
 
     # Show the last commit
     showlast = log -1 HEAD --stat --abbrev-commit
@@ -107,45 +128,18 @@
     # -i non-case-sensitive
     f = grep -Ii
 
-    # Start a branch
-    start = checkout -b
 
-    # Continue working on a branch
-    resume = checkout
+    # Branching
+    # =========
 
-    # Finish a branch
-    finish = push origin
-
-
-    # Switch to master
-    master = checkout master
-
-    # Create a branch and switch to it
-    create = checkout -b
-
-    # Delete a branch
-    delete = branch -d
-
-    # Remove a remote branch
-    remove = !sh -c 'git push origin :$0'
-
-    # Delete and remove a branch after it is accepted
-    accept = !sh -c 'git delete $0 && git remove $0'
-
-    # Show all merged branches
-    merged = branch --merged
-
-    # Show all unmerged branches
-    unmerged = branch --no-merged
-
-    # Show all branches
-    list = branch
-
-    # Show all branches
-    branches = branch
+    # Show all branches (including remotes)
+    branches = branch -a
 
     # Rename a branch
-    rename = branch -m
+    renameb = branch -m
+
+    # Delete a branch
+    rmbranch = branch -d
 
     # Reset <branchname>, $0, to <commit>, $1, if <branchname> exists already.
     # Without -f git branch refuses to change an existing branch.
@@ -156,3 +150,19 @@
     # * Point the current branch at $0 (keeping local index and working
     #   directory intact)
     bend = !sh -c 'git branch $1 && git reset --soft $0'
+
+
+    # Tags
+    # ====
+
+    # Show all tags
+    tags = git tags
+
+    # Convenience
+    # ===========
+    
+    # Create a branch and switch to it
+    diverge = checkout -b
+
+    # Switch to master
+    master = checkout master

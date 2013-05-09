@@ -1,5 +1,29 @@
 [alias]
-    # Use template "!sh -c 'git command $0'" for positional arguments
+    # NOTE: Use template "!sh -c 'git command $0'" for positional arguments
+
+    # Workflow
+    # ========
+    
+    # Create a branch and switch to it
+    # Equivalent to `git branch <name> & git checkout <name>`
+    feature = checkout -b
+
+    # Amend the last commit
+    amend = commit --amend
+
+    # Update files in the working tree to match the version in the specified tree
+    update = checkout
+
+    # Sync with master
+    # Equivalent to `git fetch & git rebase`
+    # Rebase the current branch on top of upstream after fetching.
+    sync = pull --rebase origin master
+
+    # Switch to master
+    master = checkout master
+
+    # Delete a branch
+    del = branch -d
 
 
     # Staging
@@ -14,24 +38,13 @@
     # Update file in working tree to match version in the index
     restore = checkout HEAD --
 
-    # Update files in the working tree to match the version in the specified tree
-    resume = checkout
-
-
-    # Commits
+    # History
     # =======
 
     # Undo the previous commit, and leave the changes in the index
     # To undo _this_, check the reflog then git reset --hard the commit
     # See: http://stackoverflow.com/questions/5473/undoing-a-git-reset-hard-head1
     uncommit = reset --soft HEAD^
-
-    # Amend the last commit
-    recommit = commit --amend
-
-
-    # History
-    # =======
 
     # Squash multiple commits into one
     # Must provide argument in the form HEAD~$1 where $1 is the
@@ -46,24 +59,8 @@
     # Remotes
     # =======
 
-    # Sync with master
-    # Rebase the current branch on top of upstream after fetching.
-    # Show diff stat at the end.
-    sync = pull --stat --rebase origin master
-
-    # Sync with master and push to master
-    # Rebase the current branch on top of upstream after fetching.
-    # Show diff stat at the end.
-    syncup = !sh -c 'git sync && git push origin master'
-
     # Show remotes
     remotes = remote -v
-
-    # Delete a remote
-    rmremote = remote rm
-
-    # Delete a remote branch
-    rmremotebranch = !sh -c 'git push origin :$0'
 
 
     # Merges
@@ -138,9 +135,6 @@
     # Rename a branch
     renameb = branch -m
 
-    # Delete a branch
-    rmbranch = branch -d
-
     # Reset <branchname>, $0, to <commit>, $1, if <branchname> exists already.
     # Without -f git branch refuses to change an existing branch.
     movebranch = git branch -f
@@ -157,12 +151,3 @@
 
     # Show all tags
     tags = git tags
-
-    # Convenience
-    # ===========
-    
-    # Create a branch and switch to it
-    diverge = checkout -b
-
-    # Switch to master
-    master = checkout master

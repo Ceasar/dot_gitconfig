@@ -130,7 +130,7 @@
     # =========
 
     # Show all branches (including remotes)
-    branches = branch -a
+    branches = branch -v
 
     # Rename a branch
     renameb = branch -m

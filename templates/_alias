@@ -37,6 +37,9 @@
 
     # Update file in working tree to match version in the index
     restore = checkout HEAD --
+    
+    # Remove all untracked files
+    cleanf = clean -f -d
 
     # History
     # =======
